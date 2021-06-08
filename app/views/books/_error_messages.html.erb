@@ -1,0 +1,11 @@
+  <!--エラーメッセージが出力されたいたら、件数とメッセージを表示する。-->
+<% if @book.errors.any? %>
+<div class="error-box">
+    <h2 class="error-head"><%= @book.errors.count %>errors prohibited this book from being saved:</h2>
+    <ul class="error-text">
+      <% @book.errors.full_messages.each do |message| %>
+      <li><%= message %></li>
+      <% end %>
+    </ul>
+</div>
+<% end %>

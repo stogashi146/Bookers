@@ -25,7 +25,6 @@ class BooksController < ApplicationController
         @books = Book.all
         render :index
       end
-
   end
 
   def edit
@@ -33,12 +32,13 @@ class BooksController < ApplicationController
   end
 
   def update
-    @book = Book.find(params[:id])
-    # 更新成功でリダイレクト後、メッセージ、失敗で失敗メッセージ
-      @book.update(book_params)
-      redirect_to book_path(@book.id)
-      flash[:update] = "Book was successfully updated."
-      # render action: :edit
+     @book = Book.find(params[:id])
+     if @book.update(book_params)
+        redirect_to book_path(@book.id)
+        flash[:update] = "Book was successfully updated."
+      else
+        render action: :edit
+      end
   end
 
   def destroy
@@ -49,8 +49,8 @@ class BooksController < ApplicationController
 
   private
   def book_params
-    # params.require(:book).permit(:title,:body)
-    params.permit(:title,:body)
+    params.require(:book).permit(:title,:body)
+    # params.permit(:title,:body)
   end
 
 end
